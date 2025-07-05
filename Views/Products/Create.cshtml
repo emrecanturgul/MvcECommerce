@@ -316,8 +316,8 @@
         const categoryDropdown = document.getElementById('categoryDropdown');
         const selectedCategoryText = document.getElementById('selectedCategoryText');
 
-        categoryDropdown.addEventListener('change', function () {
-            const selectedOption = this.options[this.selectedIndex];
+        function updateSelectedCategory() {
+            const selectedOption = categoryDropdown.options[categoryDropdown.selectedIndex];
             const selectedText = selectedOption.text;
             const selectedValue = selectedOption.value;
 
@@ -327,6 +327,9 @@
             } else {
                 selectedCategoryText.style.display = 'none';
             }
-        });
+        }
+
+        updateSelectedCategory();
+        categoryDropdown.addEventListener('change', updateSelectedCategory);
     });
 </script>
