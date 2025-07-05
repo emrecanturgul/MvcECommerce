@@ -1,0 +1,34 @@
+﻿@model MvcECommerce.Entities.Category
+@{
+    ViewBag.Title = "Add New Category";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card p-4 shadow" style="border-radius:22px; background:#fff;">
+                <h3 class="mb-4" style="font-weight:700; background: linear-gradient(90deg,#1686b7,#8f3ffc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Add New Category</h3>
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(model => model.Name, new { @class = "font-weight-600 mb-1" })
+                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control form-control-lg", style = "border-radius:12px;" })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger small" })
+                    </div>
+                    <div class="form-group mb-4">
+                        @Html.LabelFor(model => model.Description, new { @class = "font-weight-600 mb-1" })
+                        @Html.TextAreaFor(model => model.Description, 3, 60, new { @class = "form-control", style = "border-radius:12px;" })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger small" })
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" style="border-radius:14px; background:linear-gradient(90deg,#1686b7,#8f3ffc);font-weight:600;">
+                        <i class="fa fa-save mr-2"></i> Save
+                    </button>
+                    <a href="@Url.Action("Index")" class="btn btn-outline-secondary btn-lg btn-block mt-2" style="border-radius:14px;">
+                        Cancel
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+</div>

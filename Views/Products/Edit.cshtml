@@ -1,0 +1,66 @@
+﻿@model MvcECommerce.Entities.Product
+@{
+    ViewBag.Title = "Edit Product";
+}
+
+<div class="edit-wrapper" style="min-height:40vh;display:flex;align-items:center;">
+    <div class="container d-flex justify-content-center align-items-center" style="max-width:100000px; width :500px; min-height:100vh;">
+        <div class="card shadow-lg rounded-4">
+            <div class="card-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.Id)
+
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(m => m.Name, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Product Name" })
+                        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(m => m.Description, new { @class = "form-label" })
+                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Product Description", rows = 3 })
+                        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(m => m.Price, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Price, new { @class = "form-control", type = "number", step = "0.01", placeholder = "Price" })
+                        @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(m => m.Stock, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Stock, new { @class = "form-control", type = "number", placeholder = "Stock" })
+                        @Html.ValidationMessageFor(m => m.Stock, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(m => m.Image, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Image, new { @class = "form-control", placeholder = "Image Url" })
+                        @Html.ValidationMessageFor(m => m.Image, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group mb-3">
+                        @Html.LabelFor(m => m.CategoryId, "Category", new { @class = "form-label" })
+                        @Html.DropDownList("CategoryId", null, "Select Category", new { @class = "form-select" })
+                        @Html.ValidationMessageFor(m => m.CategoryId, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-check mb-3">
+                        @Html.CheckBoxFor(m => m.IsApproved, new { @class = "form-check-input" })
+                        @Html.LabelFor(m => m.IsApproved, new { @class = "form-check-label" })
+                    </div>
+                    <div class="form-check mb-3">
+                        @Html.CheckBoxFor(m => m.IsHome, new { @class = "form-check-input" })
+                        @Html.LabelFor(m => m.IsHome, new { @class = "form-check-label" })
+                    </div>
+
+                    <button type="submit" class="btn btn-primary rounded-3">Save</button>
+                    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-link" })
+                }
+            </div>
+        </div>
+    </div>
+</div>

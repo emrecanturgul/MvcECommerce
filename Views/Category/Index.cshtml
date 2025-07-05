@@ -1,0 +1,46 @@
+﻿@model IEnumerable<MvcECommerce.Entities.Category>
+@{
+    ViewBag.Title = "Category List";
+}
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 style="font-weight:700; background: linear-gradient(90deg,#1686b7,#8f3ffc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Categories</h2>
+        <a href="@Url.Action("Create")" class="btn btn-primary shadow" style="background:linear-gradient(90deg,#1686b7,#8f3ffc); border-radius:16px; font-weight:600;">
+            <i class="fa fa-plus mr-1"></i> New Category
+        </a>
+    </div>
+    <div class="card shadow-lg p-4" style="border-radius:22px; background:#fff;">
+        <table class="table table-borderless align-middle mb-0">
+            <thead>
+                <tr>
+                    <th style="color:#888;font-weight:600;">ID</th>
+                    <th style="color:#888;font-weight:600;">Name</th>
+                    <th style="color:#888;font-weight:600;">Description</th>
+                    <th style="color:#888;font-weight:600;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr style="border-top:1px solid #f1f3fa;">
+                        <td>@item.Id</td>
+                        <td style="font-weight:600;">@item.Name</td>
+                        <td>@item.Description</td>
+                        <td>
+                            <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-sm btn-warning mr-2" style="border-radius:10px;">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <a href="@Url.Action("Details", new { id = item.Id })" class="btn btn-sm btn-info mr-2" style="border-radius:10px;">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                            <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-sm btn-danger" style="border-radius:10px;">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

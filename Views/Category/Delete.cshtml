@@ -1,0 +1,38 @@
+﻿@model MvcECommerce.Entities.Category
+
+@{
+    ViewBag.Title = "Delete Category";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card p-5 shadow" style="border-radius: 22px; background: #fff;">
+                <h3 class="mb-4 text-danger">Kategori Sil</h3>
+                <p class="mb-4 text-muted">Bu kategoriyi silmek istediğinizden emin misiniz?</p>
+
+                <div class="mb-4">
+                    <div class="mb-3">
+                        <strong>@Html.DisplayNameFor(model => model.Name):</strong>
+                        <div>@Html.DisplayFor(model => model.Name)</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <strong>@Html.DisplayNameFor(model => model.Description):</strong>
+                        <div>@Html.DisplayFor(model => model.Description)</div>
+                    </div>
+                </div>
+
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <input type="submit" value="Sil" class="btn btn-danger px-4" />
+                        @Html.ActionLink("Geri Dön", "Index", null, new { @class = "btn btn-outline-secondary" })
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

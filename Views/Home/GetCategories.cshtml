@@ -1,0 +1,74 @@
+﻿@model IEnumerable<MvcECommerce.Entities.Category>
+@{
+    var selectedCategory = Url.RequestContext.RouteData.Values["id"];
+}
+
+<ul class="list-group list-group-flush" style="background:#fff; border-radius:22px; box-shadow:0 4px 32px 0 rgba(60,60,80,0.07); padding:32px 0 24px 0;">
+
+    <li class="list-group-item all-categories"
+        style="border:none; background:linear-gradient(90deg,#1686b7 0%,#186a8d 100%); font-weight:700; letter-spacing:0.02em; margin:0 16px 16px 16px; border-radius:16px; box-shadow:0 2px 16px 0 rgba(24,106,141,0.15); text-align:center; transition:background 0.2s;">
+        <a href="/Home/List"
+           style="
+         background: linear-gradient(90deg, #d8e7ff 20%, #84b7dd 70%, #b6d4f7 100%);
+         -webkit-background-clip: text;
+         -webkit-text-fill-color: transparent;
+         background-clip: text;
+         text-fill-color: transparent;
+         text-shadow: 0 1px 10px rgba(20,50,110,0.13), 0 2px 8px rgba(30,120,255,0.06);
+         text-decoration:none; display:block; padding:10px 0; font-size:1.14rem; border-radius:14px;">
+            <i class="fa fa-th-large" style="margin-right:7px;opacity:0.80;"></i>
+            All Categories
+        </a>
+    </li>
+
+    @foreach (var category in Model)
+    {
+        
+        if (selectedCategory == null)
+        {
+            
+            <li class="list-group-item border-0"
+                style="color:#888; background:transparent; margin:0 18px 6px 18px; border-radius:12px; font-weight:500; cursor:pointer;"
+                onmouseover="this.style.boxShadow='0 3px 18px 0 rgba(60,60,80,0.10)';this.style.background='#f5f5f7';"
+                onmouseout="this.style.boxShadow='none';this.style.background='transparent';">
+                <a href="/Home/List/@category.Id"
+                   style="display:block; color:inherit; text-decoration:none; padding:2px 0;">
+                    @category.Name
+                </a>
+            </li>
+        }
+        else
+        {
+            
+            if (category.Id == int.Parse(selectedCategory.ToString()))
+            {
+                
+
+                <li class="list-group-item border-0"
+                    style="color:#fff; background:linear-gradient(90deg,#186a8d 0%,#1686b7 100%); margin:0 18px 6px 18px; border-radius:14px; font-weight:700; cursor:pointer; box-shadow:0 3px 18px 0 rgba(24,106,141,0.19);"
+                    onmouseover="this.style.boxShadow='0 3px 18px 0 rgba(60,60,80,0.16)';"
+                    onmouseout="this.style.boxShadow='0 3px 18px 0 rgba(24,106,141,0.19)';">
+                    <a href="/Home/List/@category.Id"
+                       style="display:block; color:inherit; text-decoration:none; padding:2px 0;">
+                        <i class="fa fa-angle-double-right" style="margin-right:7px;opacity:0.90;"></i>
+                        @category.Name
+                    </a>
+                </li>
+            }
+            else
+            {
+                
+                <li class="list-group-item border-0"
+                    style="color:#888; background:transparent; margin:0 18px 6px 18px; border-radius:12px; font-weight:500; cursor:pointer;"
+                    onmouseover="this.style.boxShadow='0 3px 18px 0 rgba(60,60,80,0.10)';this.style.background='#f5f5f7';"
+                    onmouseout="this.style.boxShadow='none';this.style.background='transparent';">
+                    <a href="/Home/List/@category.Id"
+                       style="display:block; color:inherit; text-decoration:none; padding:2px 0;">
+                        <i class="fa fa-angle-double-right" style="margin-right:7px;opacity:0.5;"></i>
+                        @category.Name
+                    </a>
+                </li>
+            }
+        }
+    }
+</ul>

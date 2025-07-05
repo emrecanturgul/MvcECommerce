@@ -1,0 +1,332 @@
+﻿@model MvcECommerce.Entities.Product
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<style>
+    :root {
+        --primary-color: #4a90e2;
+        --secondary-color: #f8f9fa;
+        --accent-color: #28a745;
+        --text-color: #2c3e50;
+        --border-color: #e9ecef;
+        --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        min-height: 100vh;
+    }
+
+    .form-container {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        margin: 20px auto;
+        max-width: 800px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .form-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: var(--gradient);
+    }
+
+    .form-header {
+        text-align: center;
+        margin-bottom: 40px;
+        position: relative;
+    }
+
+    .form-header h2 {
+        color: var(--text-color);
+        font-weight: 300;
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+
+    .form-header::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 3px;
+        background: var(--gradient);
+        margin: 20px auto;
+        border-radius: 2px;
+    }
+
+    .form-group {
+        margin-bottom: 30px;
+        position: relative;
+    }
+
+    .control-label {
+        color: var(--text-color);
+        font-weight: 500;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .form-control {
+        border: 2px solid var(--border-color);
+        border-radius: 12px;
+        padding: 15px 20px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        background: #fafbfc;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+        background: white;
+        outline: none;
+    }
+
+    .form-control:hover {
+        border-color: var(--primary-color);
+        background: white;
+    }
+
+    .checkbox {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px 20px;
+        background: #fafbfc;
+        border: 2px solid var(--border-color);
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .checkbox:hover {
+        border-color: var(--primary-color);
+        background: white;
+    }
+
+    .checkbox input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        margin: 0;
+        cursor: pointer;
+    }
+
+    .btn {
+        border-radius: 12px;
+        padding: 15px 40px;
+        font-size: 16px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-default {
+        background: var(--gradient);
+        color: white;
+        box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+    }
+
+    .btn-default:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+        color: white;
+    }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 40px;
+        padding-top: 30px;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .back-link {
+        background: transparent;
+        border: 2px solid var(--border-color);
+        border-radius: 12px;
+        padding: 15px 30px;
+        color: var(--text-color);
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .back-link:hover {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+        text-decoration: none;
+    }
+
+    .col-md-2 {
+        width: 16.66667%;
+        float: left;
+    }
+
+    .col-md-10 {
+        width: 83.33333%;
+        float: left;
+    }
+
+    .col-md-offset-2 {
+        margin-left: 16.66667%;
+    }
+
+    .form-horizontal .form-group:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .fade-in {
+        animation: fadeIn 0.6s ease-in;
+    }
+
+    /* Seçilen kategori için minimal stil */
+    .selected-category-text {
+        color: var(--primary-color);
+        font-weight: 500;
+        font-size: 14px;
+        margin-top: 5px;
+        display: none;
+    }
+
+   
+</style>
+
+<div class="form-container fade-in">
+    <div class="form-header">
+        <h2>Create Product</h2>
+    </div>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter product name" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter product description" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter image URL" } })
+                    @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", placeholder = "0.00" } })
+                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Stock, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Stock, new { htmlAttributes = new { @class = "form-control", placeholder = "0" } })
+                    @Html.ValidationMessageFor(model => model.Stock, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsApproved, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.IsApproved)
+                        @Html.LabelFor(model => model.IsApproved, "Approved")
+                        @Html.ValidationMessageFor(model => model.IsApproved, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsHome, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.IsHome)
+                        @Html.LabelFor(model => model.IsHome, "Show on Homepage")
+                        @Html.ValidationMessageFor(model => model.IsHome, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CategoryId, "Category", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("CategoryId", null, "Select Category", htmlAttributes: new { @class = "form-control", @id = "categoryDropdown" })
+                    @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                    <small id="selectedCategoryText" class="selected-category-text"></small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create Product" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="form-actions">
+        @Html.ActionLink("Back to List", "Index", null, new { @class = "back-link" })
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const categoryDropdown = document.getElementById('categoryDropdown');
+        const selectedCategoryText = document.getElementById('selectedCategoryText');
+
+        categoryDropdown.addEventListener('change', function () {
+            const selectedOption = this.options[this.selectedIndex];
+            const selectedText = selectedOption.text;
+            const selectedValue = selectedOption.value;
+
+            if (selectedValue && selectedValue !== "") {
+                selectedCategoryText.textContent = `✓ ${selectedText}`;
+                selectedCategoryText.style.display = 'block';
+            } else {
+                selectedCategoryText.style.display = 'none';
+            }
+        });
+    });
+</script>

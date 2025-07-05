@@ -1,0 +1,42 @@
+﻿@using MvcECommerce.Entities
+@using MvcECommerce.Models
+@model List<ProductModel>
+@{
+    ViewBag.Title = "Home";
+}
+
+<body>
+    <div class="hero-container">
+        <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80"
+             alt="Tesla Background" class="hero-bg-car">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">Welcome to Tesla Garage</h1>
+                <p class="hero-subtitle">
+                    Dreaming of the world's best electric cars?<br>
+                    <span class="hero-highlight">Zero emissions. 100% performance.</span><br>
+                    Discover your Tesla below!
+                </p>
+                <button class="cta-button">Explore Tesla Models</button>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number">400+</div>
+                        <div class="stat-label">Miles Range</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">3.5s</div>
+                        <div class="stat-label">0-60 mph</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">15min</div>
+                        <div class="stat-label">Fast Charging</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<div class="container pb-5">
+    @Html.Partial("_ProductList", Model)
+</div>

@@ -1,0 +1,68 @@
+﻿@using MvcECommerce.Entities
+@using MvcECommerce.Models
+@model List<ProductModel>
+
+
+
+<div class="container mt-4">
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
+                <div class="card tesla-card shadow-sm w-100">
+                    <div class="image-container">
+                        <div class="tesla-badge">⚡ TESLA</div>
+                        <a href="@Url.Action("Details", "Home", new { id = product.Id })">
+                            <img class="card-img-top" src="@(Url.Content("~/theme/img/tesla-model-y-2025.jpg"))" alt="@product.Name" style="object-fit:cover; height:240px;">
+                        </a>
+                        <div class="image-overlay"></div>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title mb-2">
+                            <a href="@Url.Action("Details", "Home", new { id = product.Id })">@product.Name</a>
+                        </h5>
+                        <p class="card-text">@product.Description</p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <div style="display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);">$@product.Price </div>
+                            <a href="@Url.Action("Details", "Home", new { id = product.Id })"
+                               style="display: inline-block;
+          width: 100%;
+          padding: 12px 20px;
+          background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+          border: 1px solid #dee2e6;
+          border-radius: 12px;
+          text-decoration: none;
+          color: #495057;
+          font-weight: 500;
+          font-size: 14px;
+          text-align: center;
+          transition: all 0.2s ease;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.06);
+          cursor: pointer;"
+                               onmouseover="this.style.background='linear-gradient(145deg, #ffffff, #f1f3f4)';
+                this.style.boxShadow='0 4px 12px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.08)';
+                this.style.transform='translateY(-1px)';"
+                               onmouseout="this.style.background='linear-gradient(145deg, #f8f9fa, #e9ecef)';
+               this.style.boxShadow='0 2px 8px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.06)';
+               this.style.transform='translateY(0)';"
+                               onmousedown="this.style.transform='translateY(0)';
+                this.style.boxShadow='0 1px 4px rgba(0,0,0,0.1)';"
+                               onmouseup="this.style.transform='translateY(-1px)';
+              this.style.boxShadow='0 4px 12px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.08)';">
+                                <i class="fa-solid fa-rocket" style="margin-right: 8px; color: #6c757d;"></i>
+                                Review Product
+                            </a>
+
+                        </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

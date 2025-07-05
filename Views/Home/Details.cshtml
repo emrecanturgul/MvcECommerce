@@ -1,0 +1,109 @@
+﻿@using MvcECommerce.Entities
+@model Product
+
+@{
+    ViewBag.Title = "Product Details";
+}
+<div class="container mt-5">
+    <div class="row align-items-center justify-content-center">
+       
+        <div class="col-lg-6 col-md-6 text-center mb-4 mb-md-0">
+            <div style="background: #f9f9fb; border-radius:28px; padding:32px; display:inline-block; box-shadow:0 6px 30px rgba(60,60,120,0.08);">
+                <img src="@(Url.Content("~/theme/img/tesla-model-y-2025.jpg"))"
+                     alt="@Model.Name"
+                     class="img-fluid"
+                     style="max-width:420px; border-radius:22px; box-shadow:0 12px 34px rgba(50,60,130,0.13);">
+            </div>
+        </div>
+       
+        <div class="col-lg-6 col-md-6">
+            <h1 class="mb-2" style="font-size:2.7rem; font-weight:900;">@Model.Name</h1>
+            <span style="font-size:1.45rem; margin-right:8px;">
+                <i class="fa-solid fa-car-side text-secondary"></i>
+            </span>
+            <span style="font-size:1.14rem; color:#888;">
+                @Model.Category.Name
+            </span>
+
+
+            <div class="mb-3">
+                <span class="text-warning me-2">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                </span>
+                <span class="ms-1" style="color:#666;">4.0 / 5</span>
+                <span class="badge bg-light text-dark ms-3" style="font-size:1rem;">
+                    <i class="fa-regular fa-comment"></i> 14 Comments
+                </span>
+            </div>
+
+            <div class="mb-3" style="font-size:1.15rem; color:#222;">
+                @Model.Description
+            </div>
+
+            <div class="d-flex align-items-center mb-3">
+                <span class="me-2 fs-5 text-warning">
+
+                </span>
+                <div class="d-flex align-items-center">
+
+                    @if (Model.Stock > 0)
+                    {
+                        <span class="fw-semibold text-success">
+                            <i class="fa-solid fa-box me-1 fs-6"></i>
+                            @Model.Stock pcs In Stock
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="fw-semibold text-danger">
+                            <i class="fa-solid fa-box me-1 fs-6"></i>
+                            Out of Stock
+                        </span>
+                    }
+                </div>
+
+            </div>
+
+
+
+
+            <div class="mb-4" style="font-size:2.1rem; color:#0b8d3c; font-weight:700;">
+                $@Model.Price
+            </div>
+
+
+
+
+            <a href="@Url.Action("Index", "Home")" class="btn btn-dark px-4 py-2">
+                <i class="fa-solid fa-chevron-left me-2"></i>Back to Products
+            </a>
+        </div>
+    </div>
+
+    <!-- Yorumlar -->
+    <div class="row mt-5 justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h4 class="mb-4"><i class="fa-regular fa-comments me-2"></i>Comments</h4>
+                    <div class="mb-3">
+                        <b>Emre</b> <span class="text-warning ms-2"><i class="fa-solid fa-star"></i> 5</span>
+                        <div class="text-muted mb-2" style="font-size:0.99rem;">amazing</div>
+                    </div>
+                    <div class="mb-3">
+                        <b>Ayşe</b> <span class="text-warning ms-2"><i class="fa-solid fa-star"></i> 4</span>
+                        <div class="text-muted mb-2" style="font-size:0.99rem;">perfect</div>
+                    </div>
+                    <div>
+                        <b>Can</b> <span class="text-warning ms-2"><i class="fa-solid fa-star"></i> 3</span>
+                        <div class="text-muted mb-2" style="font-size:0.99rem;">great</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
