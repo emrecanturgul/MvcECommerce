@@ -7,7 +7,7 @@ using System.Web;
 
 namespace MvcECommerce.Entities
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<ApplicationUser>
     {
         public DataContext() : base("MyDbContext")
         {
