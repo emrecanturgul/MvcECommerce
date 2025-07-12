@@ -1,0 +1,177 @@
+﻿@model MvcECommerce.Identity.ApplicationUser
+
+@{
+    ViewBag.Title = "Kullanıcı Sil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-user-times"></i> Kullanıcı Silme Onayı
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <strong>Dikkat!</strong> Bu işlem geri alınamaz. Kullanıcı kalıcı olarak silinecektir.
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-4 text-center">
+                            <div class="avatar-large bg-danger text-white">
+                                @Model.UserName.First().ToString().ToUpper()
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <h4 class="text-danger">@Model.UserName</h4>
+                            <p class="text-muted mb-1">
+                                <i class="fas fa-envelope"></i> @Model.Email
+                            </p>
+                            
+                        </div>
+                    </div>
+
+                    <div class="user-details">
+                        <h5 class="text-dark mb-3">
+                            <i class="fas fa-info-circle"></i> Kullanıcı Bilgileri
+                        </h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="detail-item">
+                                    <strong>Kullanıcı Adı:</strong>
+                                    <span class="text-muted">@Model.UserName</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-item">
+                                    <strong>Email:</strong>
+                                    <span class="text-muted">@Model.Email</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="detail-item">
+                                    <strong>Telefon:</strong>
+                                    <span class="text-muted">@(Model.PhoneNumber ?? "Belirtilmemiş")</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-item">
+                                    <strong>Email Onayı:</strong>
+                                    @if (Model.EmailConfirmed)
+                                    {
+                                        <span class="badge bg-success">
+                                            <i class="fas fa-check"></i> Onaylandı
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning">
+                                            <i class="fas fa-times"></i> Onaylanmadı
+                                        </span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="deletion-warning">
+                        <h5 class="text-danger mb-3">
+                            <i class="fas fa-exclamation-triangle"></i> Silme İşlemi Sonuçları
+                        </h5>
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-times text-danger me-2"></i>
+                                Kullanıcı hesabı kalıcı olarak silinecek
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-times text-danger me-2"></i>
+                                Tüm kullanıcı verileri kaldırılacak
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-times text-danger me-2"></i>
+                                Bu işlem geri alınamaz
+                            </li>
+                        </ul>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="d-flex justify-content-between">
+                        @Html.ActionLink("İptal Et", "Index", null, new { @class = "btn btn-secondary btn-lg" })
+
+                        @using (Html.BeginForm("Delete", "Admin", FormMethod.Post, new { @class = "d-inline" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(model => model.Id)
+                            <button type="submit" class="btn btn-danger btn-lg" onclick="return confirm('Bu kullanıcıyı silmek istediğinizden emin misiniz?');">
+                                <i class="fas fa-trash"></i> Kullanıcıyı Sil
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .avatar-large {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 32px;
+        margin: 0 auto 20px;
+    }
+
+    .card {
+        border-radius: 15px;
+    }
+
+    .card-header {
+        border-radius: 15px 15px 0 0 !important;
+    }
+
+    .user-details {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .detail-item {
+        margin-bottom: 10px;
+    }
+
+    .deletion-warning {
+        background: #fff5f5;
+        border: 1px solid #fed7d7;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .list-group-item {
+        border: none;
+        background: transparent;
+        padding: 10px 0;
+    }
+
+    .btn-lg {
+        padding: 0.75rem 2rem;
+        font-size: 1.1rem;
+    }
+
+    .me-2 {
+        margin-right: 0.5rem;
+    }
+</style>

@@ -1,0 +1,268 @@
+﻿@model MvcECommerce.Models.OrderDetailsModel
+@{
+    ViewBag.Title = "Order Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>
+                    <i class="fa fa-file-text"></i> Order Details
+                </h2>
+                @Html.ActionLink("Back to Orders", "Index", "Order",
+                    null, new { @class = "btn btn-secondary" })
+            </div>
+
+            @if (TempData["message"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @TempData["message"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            @if (TempData["error"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @TempData["error"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <div class="row">
+                <!-- Order Info -->
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Order Information</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <table class="table table-borderless">
+                                        <tr>
+                                            <td><strong>Order Number:</strong></td>
+                                            <td>#@Model.OrderNumber</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Customer:</strong></td>
+                                            <td>@Model.FullName</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Username:</strong></td>
+                                            <td>@Model.Username</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Order Date:</strong></td>
+                                            <td>@Model.OrderDate.ToString("dd.MM.yyyy HH:mm")</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-md-6">
+                                    <table class="table table-borderless">
+                                        <tr>
+                                            <td><strong>Total:</strong></td>
+                                            <td>
+                                                <span class="badge bg-success fs-6">
+                                                    @Model.Total
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Items:</strong></td>
+                                            <td>
+                                                <span class="badge bg-info">
+                                                    @Model.OrderLines.Count items
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Current Status:</strong></td>
+                                            <td>
+                                                <span class="badge bg-warning">
+                                                    @Model.OrderState.ToString()
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                   
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h5 class="card-title">Order Items</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Image</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.OrderLines)
+                                        {
+                                            <tr>
+                                                <td>@item.ProductName</td>
+                                                <td>
+                                                    @if (!string.IsNullOrEmpty(item.Image))
+                                                    {
+                                                        <img src="@item.Image" alt="@item.ProductName"
+                                                             class="img-thumbnail" style="width: 50px; height: 50px;" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="text-muted">No image</span>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-secondary">@item.Quantity</span>
+                                                </td>
+                                                <td>@item.Price.ToString()</td>
+                                                <td>
+                                                    <strong>@((item.Price * item.Quantity))</strong>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-md-4">
+                    <!-- Update Status -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">
+                                <i class="fa fa-edit"></i> Update Order Status
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <dl class="row">
+                                <dt class="col-sm-3">Order State</dt>
+                                <dd class="col-sm-9">
+                                    <div class="row">
+                                        @using (Html.BeginForm("UpdateOrderState", "Order", FormMethod.Post))
+                                        {
+                                            @Html.HiddenFor(i => i.OrderId) 
+                                            <div class="mb-3">
+                                                @Html.EnumDropDownListFor(i => i.OrderState, "Select Order State", new { @class = "form-select" })
+                                            </div>
+                                            <button type="submit" class="btn btn-primary w-100">
+                                                <i class="fa fa-check"></i> Update Status
+                                            </button>
+                                        }
+
+                                    </div>
+                                </dd>
+                            </dl>
+
+                        </div>
+                    </div>
+
+                   
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h5 class="card-title">
+                                <i class="fa fa-map-marker"></i> Delivery Address
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <address>
+                                <strong>@Model.AddressName</strong><br>
+                                @Model.Neighborhood<br>
+                                @Model.District / @Model.City<br>
+                                @if (!string.IsNullOrEmpty(Model.ZipCode))
+                                {
+                                    <span>ZIP: @Model.ZipCode</span>
+                                }
+                            </address>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h5 class="card-title">
+                                <i class="fa fa-bolt"></i> Quick Actions
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-grid gap-2">
+                                <button type="button" class="btn btn-info" onclick="window.print()">
+                                    <i class="fa fa-print"></i> Print Order
+                                </button>
+                                <a href="mailto:@Model.Username" class="btn btn-outline-primary">
+                                    <i class="fa fa-envelope"></i> Email Customer
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        border: 1px solid rgba(0, 0, 0, 0.125);
+    }
+
+    .card-header {
+        background-color: #f8f9fa;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    }
+
+    .table-borderless td {
+        border: none;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .img-thumbnail {
+        object-fit: cover;
+    }
+
+    .badge {
+        font-size: 0.875em;
+    }
+
+    .fs-6 {
+        font-size: 1.25rem !important;
+    }
+
+  
+</style>
+
+<script>
+    $(document).ready(function () {
+        // Auto-hide alerts after 5 seconds
+        setTimeout(function () {
+            $('.alert').fadeOut();
+        }, 5000);
+
+        // Status update confirmation
+        $('form[action*="UpdateOrderState"]').on('submit', function (e) {
+            var selectedStatus = $(this).find('select').find('option:selected').text();
+            if (!confirm('Are you sure you want to change the status to "' + selectedStatus + '"?')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    });
+</script>

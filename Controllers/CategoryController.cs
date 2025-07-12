@@ -10,6 +10,7 @@ using MvcECommerce.Entities;
 
 namespace MvcECommerce.Controllers
 {
+    [Authorize(Roles = "admin  , superadmin")]
     public class CategoryController : Controller
     {
         private DataContext db = new DataContext();
@@ -43,7 +44,7 @@ namespace MvcECommerce.Controllers
 
             db.Entry(category).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index"); 
         }
         public ActionResult Edit(int? id)
         {

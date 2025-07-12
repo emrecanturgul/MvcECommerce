@@ -1,0 +1,97 @@
+﻿@model MvcECommerce.Models.OrderDetailsModel
+@{
+    ViewBag.Title = "Order Details";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg p-4 mb-4" style="border-radius:24px; background:#fff;">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="fa fa-clipboard-list fa-2x me-3" style="color:#1686b7;"></i>
+                    <h2 style="font-weight:700; background:linear-gradient(90deg,#1686b7,#8f3ffc);-webkit-background-clip:text;-webkit-text-fill-color:transparent; margin-bottom:0;">
+                        Order Details
+                    </h2>
+                </div>
+                <hr />
+
+                <div class="row mb-3">
+                    <div class="col-sm-6">
+                        <span class="text-muted">Order Number:</span>
+                        <span class="fw-bold">@Model.OrderNumber</span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span class="text-muted">Order Date:</span>
+                        <span>@Model.OrderDate.ToString("dd.MM.yyyy")</span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-6">
+                        <span class="text-muted">Status:</span>
+                        <span class="badge @(Model.OrderState == MvcECommerce.Entities.EnumOrderState.Completed ? "bg-success" : "bg-warning text-dark")" style="font-size:1em;">
+                            @Model.OrderState.ToString()
+                        </span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span class="text-muted">Total:</span>
+                        <span class="badge bg-light text-dark border" style="font-size:1em;">
+                           @Model.Total.ToString()
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-6">
+                        <span class="text-muted">Full Name:</span>
+                        <span class="fw-semibold">@Model.FullName</span>
+                    </div>
+                    <div class="col-sm-6">
+                        <span class="text-muted">Username:</span>
+                        <span>@Model.Username</span>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <span class="text-muted">Address:</span>
+                    <div style="font-size:1.08em;">
+                        <span class="fw-semibold">@Model.AddressName</span><br />
+                        @Model.Address, @Model.Neighborhood<br />
+                        @Model.District / @Model.City, @Model.ZipCode
+                    </div>
+                </div>
+
+                <h4 class="mb-3 mt-4" style="font-weight:700;">Ordered Products</h4>
+                <table class="table table-borderless align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th></th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-end">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OrderLines)
+                        {
+                            <tr style="border-top:1px solid #f1f3fa;">
+                                <td style="width:60px;">
+                                    <img src=~/theme/img/tesla-model-y-2025.jpg alt="@item.ProductName" style="width:52px;height:52px;object-fit:cover;border-radius:12px;box-shadow:0 2px 12px rgba(20,60,180,0.07);" onerror="this.src='/theme/img/no-image.png'">
+                                </td>
+                                <td>
+                                    <span style="font-weight:600;">@item.ProductName</span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge bg-primary">@item.Quantity</span>
+                                </td>
+                                <td class="text-end">
+                                    <span class="badge bg-light text-dark border">$@item.Price</span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

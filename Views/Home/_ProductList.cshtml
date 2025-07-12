@@ -12,9 +12,14 @@
                 <div class="card tesla-card shadow-sm w-100">
                     <div class="image-container">
                         <div class="tesla-badge">⚡ TESLA</div>
-                        <a href="@Url.Action("Details", "Home", new { id = product.Id })">
-                            <img class="card-img-top" src="@(Url.Content("~/theme/img/tesla-model-y-2025.jpg"))" alt="@product.Name" style="object-fit:cover; height:240px;">
-                        </a>
+                        
+                        <img class="card-img-top"
+                             src="~/images/@product.Image"
+                             alt="@product.Name"
+                             style="object-fit:cover; height:240px;">
+
+
+
                         <div class="image-overlay"></div>
                     </div>
                     <div class="card-body text-center">

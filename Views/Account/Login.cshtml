@@ -1,0 +1,195 @@
+﻿@model MvcECommerce.Models.Login
+
+@{
+    ViewBag.Title = "Login";
+    
+}
+
+<style>
+    .form-container {
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 12px 32px 0 rgba(60,60,80,0.12);
+        padding: 40px 30px;
+        margin: 60px auto 30px auto;
+        max-width: 440px;
+    }
+
+    .form-header {
+        text-align: center;
+        margin-bottom: 32px;
+    }
+
+        .form-header h2 {
+            color: #2c3e50;
+            font-weight: 400;
+            font-size: 2.1rem;
+            margin: 0;
+        }
+
+    .form-group {
+        margin-bottom: 26px;
+        position: relative;
+    }
+
+    .control-label {
+        color: #2c3e50;
+        font-weight: 500;
+        margin-bottom: 7px;
+        display: block;
+    }
+
+    .form-control {
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        padding: 13px 44px 13px 18px;
+        font-size: 1.08rem;
+        background: #fafbfc;
+        width: 100%;
+        box-sizing: border-box;
+        transition: border .2s;
+    }
+
+        .form-control:focus {
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 3px rgba(74,144,226,0.1);
+            outline: none;
+            background: #fff;
+        }
+
+    .show-pass-toggle {
+        position: absolute;
+        right: 16px;
+        top: 36px;
+        cursor: pointer;
+        color: #959595;
+        font-size: 1.19em;
+        z-index: 10;
+        transition: color .15s;
+    }
+
+        .show-pass-toggle:hover {
+            color: #4a90e2;
+        }
+
+    .form-check {
+        display: flex;
+        align-items: center;
+        margin-bottom: 22px;
+        margin-top: 5px;
+        gap: 8px;
+    }
+
+    .form-check-input {
+        width: 1.1em;
+        height: 1.1em;
+        border-radius: 5px;
+        margin-right: 7px;
+        accent-color: #4a90e2;
+        border: 1.5px solid #ccd2de;
+    }
+
+    .form-check-label {
+        font-size: 1em;
+        color: #2c3e50;
+        font-weight: 500;
+        margin-left: 2px;
+        cursor: pointer;
+    }
+
+    .text-danger {
+        color: #dc3545;
+        font-size: 14px;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .btn-default {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 12px;
+        padding: 14px 36px;
+        border: none;
+        font-size: 1.06em;
+        font-weight: 500;
+        letter-spacing: .7px;
+        transition: background .18s;
+        width: 100%;
+    }
+
+        .btn-default:hover {
+            background: linear-gradient(135deg,#5a74e6,#6c379e);
+            color: #fff;
+        }
+
+    .register-link {
+        text-align: center;
+        margin-top: 17px;
+        font-size: 1.03em;
+    }
+
+        .register-link a {
+            color: #4a90e2;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color .17s;
+        }
+
+            .register-link a:hover {
+                color: #764ba2;
+                text-decoration: underline;
+            }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<div class="form-container fade-in">
+    <div class="form-header">
+        <h2>Sign In</h2>
+    </div>
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @ReturnUrl = ViewBag.ReturnUrl }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Username, new { @class = "control-label" })
+            @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Username" })
+            @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password", id = "passwordInput" })
+            <span class="show-pass-toggle" onclick="togglePassword('passwordInput', this)">
+                <i class="fa fa-eye"></i>
+            </span>
+            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group form-check">
+            @Html.CheckBoxFor(m => m.RememberMe, new { @class = "form-check-input", id = "rememberMe" })
+            <label class="form-check-label" for="rememberMe">Remember Me</label>
+        </div>
+        <button type="submit" class="btn-default">Login</button>
+    }
+
+    <div class="register-link">
+        Don't have an account?
+        @Html.ActionLink("Register", "Register", "Account")
+    </div>
+</div>
+
+<script>
+    function togglePassword(inputId, iconSpan) {
+        var input = document.getElementById(inputId);
+        var icon = iconSpan.querySelector('i');
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        } else {
+            input.type = "password";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+        }
+    }
+</script>

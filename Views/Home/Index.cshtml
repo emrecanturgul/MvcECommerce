@@ -1,42 +1,134 @@
-﻿@using MvcECommerce.Entities
-@using MvcECommerce.Models
-@model List<ProductModel>
+﻿@using MvcECommerce.Models
+@model IEnumerable<ProductModel>
 @{
-    ViewBag.Title = "Home";
-}
+    if (User.IsInRole("superadmin"))
+    {
+        Layout = "~/Views/Shared/_SuperAdminLayout.cshtml";
+    }
+    else if (User.IsInRole("admin"))
+    {
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
 
-<body>
-    <div class="hero-container">
-        <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80"
-             alt="Tesla Background" class="hero-bg-car">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1 class="hero-title">Welcome to Tesla Garage</h1>
-                <p class="hero-subtitle">
-                    Dreaming of the world's best electric cars?<br>
-                    <span class="hero-highlight">Zero emissions. 100% performance.</span><br>
-                    Discover your Tesla below!
-                </p>
-                <button class="cta-button">Explore Tesla Models</button>
-                <div class="stats">
-                    <div class="stat-item">
-                        <div class="stat-number">400+</div>
-                        <div class="stat-label">Miles Range</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">3.5s</div>
-                        <div class="stat-label">0-60 mph</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">15min</div>
-                        <div class="stat-label">Fast Charging</div>
-                    </div>
-                </div>
-            </div>
+            } 
+
+
+<style>
+    .hero-section {
+        position: relative;
+        width: 100vw;
+        min-height: 650px;
+        height: 84vh;
+        max-height: 900px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 54px;
+        border-radius: 0 0 38px 38px;
+    }
+
+    .hero-bg-img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        z-index: 1;
+        opacity: 0.84;
+        filter: blur(0.5px) brightness(0.98) saturate(1.1);
+    }
+
+    .hero-content-box {
+    position: relative;
+        z-index: 3;
+        max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 54px 34px 40px 34px;
+    background: rgba(14,18,30, 0.65);
+        box-shadow: 0 12px 42px 0 rgba(20,18,54,0.18);
+        border-radius: 32px;
+        backdrop-filter: blur(4px);
+        text-align: center;
+    }
+
+    .tesla-hero-title {
+        font-size: 3rem;
+        font-weight: 900;
+    color: #fff;
+        letter-spacing: .01em;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 30px #140b33b2;
+    }
+
+        .tesla-hero-title span {
+            color: #14b8a6;
+        }
+
+    .tesla-hero-desc {
+    color: #e0e0ee;
+        font-size: 1.22rem;
+        margin-bottom: 13px;
+        margin-top: 5px;
+        text-shadow: 0 1px 14px #24244473;
+    }
+
+    .tesla-hero-bold {
+        font-size: 1.13em;
+        font-weight: 700;
+    color: #fff;
+        margin-bottom: 18px;
+        text-shadow: 0 1px 10px #242444a8;
+    }
+
+    .tesla-cta-btn {
+    margin: 16px 0 0 0;
+    background: linear-gradient(90deg,#14b8a6,#7e22ce 100%);
+        border: none;
+    color: #fff;
+        font-size: 1.17rem;
+        font-weight: 700;
+        border-radius: 16px;
+    padding: 15px 36px;
+        box-shadow: 0 6px 22px rgba(126,34,206,0.19);
+    transition: .13s;
+    outline: 0;
+        text-decoration: none;
+    display: inline-block;
+    }
+
+        .tesla-cta-btn:hover {
+            background: linear-gradient(90deg,#7e22ce 10%,#14b8a6 80%);
+            box-shadow: 0 14px 40px rgba(126,34,206,0.24);
+transform: scale(1.035);
+color: #fff;
+            text-decoration: none;
+        }
+</style>
+
+<div class="hero-section">
+    <img class="hero-bg-img" src="images/0x0-Roadster_09.jpg" alt="Tesla" />
+    <div class="hero-content-box">
+        <div class="tesla-hero-title">
+            Welcome to <span>Tesla Garage</span>
         </div>
+        <div class="tesla-hero-desc">
+            The future is electric.
+        </div>
+        <div class="tesla-hero-bold">
+            Zero emission. Insane speed. Unmatched design.
+        </div>
+        <a href="#products" class="tesla-cta-btn">Discover Tesla Models</a>
     </div>
-</body>
+</div>
 
-<div class="container pb-5">
+<div class="container pb-5" id="products">
     @Html.Partial("_ProductList", Model)
 </div>

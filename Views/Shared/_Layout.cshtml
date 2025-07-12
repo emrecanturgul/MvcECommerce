@@ -7,49 +7,41 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" crossorigin="anonymous" />
     <link rel="stylesheet" href="~/theme/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+
 </head>
 <body>
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm">
         <div class="container">
-            <a class="navbar-brand font-weight-bold" href="/">Tesla Garage</a>
+            <a class="navbar-brand font-weight-bold" href="@Url.Action("Index","Home")" style="font-size:1.3rem;letter-spacing:.5px;">
+                <i class="fa-brands fa-tesla"></i> Tesla Garage
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTesla" aria-controls="navbarTesla" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarTesla">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto align-items-lg-center" style="font-size:1.08em;">
                     <li class="nav-item @(ViewBag.Title == "Home" ? "active" : "")">
                         <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item @(ViewBag.Title == "List" ? "active" : "")">
                         <a class="nav-link" href="@Url.Action("List","Home")">List</a>
                     </li>
-                    <form class="form-inline ml-lg-3 mt-2 mt-lg-0" method="get" action="@Url.Action("Search","Home")" role="search">
-                        <div class="input-group">
-                            <input class="form-control border-0 shadow-none"
-                                   type="search"
-                                   placeholder="Search the tesla"
-                                   aria-label="Search"
-                                   name="q"
-                                   style="border-radius:18px 0 0 18px; background:#f7fafd; min-width:180px;">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" style="border-radius:0 18px 18px 0; background:linear-gradient(90deg,#1686b7,#186a8d);" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-
+                    @Html.Action("Summary", "Cart") 
+                    @Html.Partial("_LoginPartial")  
                 </ul>
             </div>
         </div>
     </nav>
-    <main style="padding-top:70px; min-height:calc(100vh - 110px);">
+
+    <main style="padding-top:80px; min-height:calc(100vh - 110px);">
         @RenderBody()
-        
     </main>
-    <footer class="footer bg-dark text-light text-center w-100">
-        <div class="container">
+    <footer class="footer bg-dark text-light text-center w-100 mt-4">
+        <div class="container py-2">
             Tesla Garage &copy; @DateTime.Now.Year
         </div>
     </footer>

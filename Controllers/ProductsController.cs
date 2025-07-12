@@ -10,11 +10,13 @@ using MvcECommerce.Entities;
 
 namespace MvcECommerce.Controllers
 {
+    
     public class ProductsController : Controller
     {
         private DataContext db = new DataContext();
 
         // GET: Products
+        [Authorize(Roles = "admin , superadmin")]
         public ActionResult Index()
         {
             var products = db.Products.Include(p => p.Category).ToList();
@@ -107,7 +109,7 @@ namespace MvcECommerce.Controllers
                 return HttpNotFound();
             }
             return View(product);
-        }
+        }   
 
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]

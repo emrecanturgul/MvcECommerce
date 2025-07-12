@@ -1,0 +1,52 @@
+﻿@using MvcECommerce.Models
+@model IEnumerable<AdminOrderModel>
+@{
+    ViewBag.Title = "Orders";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container pb-5 mt-4">
+    <h2 class="mb-3" style="font-weight:900; color:white">Orders</h2>
+    <hr />
+    <div class="table-responsive">
+        <table class="table table-hover align-middle shadow rounded" style="background:white;">
+            <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Order No</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                    <th>Count</th>
+                    <th style="width:140px;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td>@order.Id</td>
+                        <td>@order.OrderNumber</td>
+                        <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>
+                            @order.OrderState
+                        </td>
+                        <td>@order.Total.ToString()</td>
+                        <td>
+                            <a href="@Url.Action("Details", "Order", new { id = order.Id })" class="btn btn-sm btn-primary">
+                                <i class="fa fa-eye"></i> Details
+                            </a>
+                           
+                        </td>
+                        <td>
+                            @order.Count
+                        </td>
+                        <td></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

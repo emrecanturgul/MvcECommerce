@@ -1,0 +1,85 @@
+﻿@model IEnumerable<MvcECommerce.Models.ProductModel>
+
+@{
+    ViewBag.Title = "Product List";
+}
+
+<style>
+    .custom-table-container {
+        background: #fff;
+        border-radius: 22px;
+        box-shadow: 0 8px 32px 0 rgba(60,60,80,0.09);
+        padding: 36px 24px;
+        margin: 32px auto;
+        max-width: 1250px;
+    }
+
+    .custom-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        font-size: 1.11rem;
+        background: transparent;
+    }
+
+        .custom-table th, .custom-table td {
+            padding: 15px 18px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .custom-table th {
+            color: #354052;
+            background: #f7fafd;
+            font-weight: 600;
+            font-size: 1.09rem;
+            letter-spacing: 0.5px;
+        }
+
+        .custom-table tbody tr {
+            transition: background .15s;
+        }
+
+            .custom-table tbody tr:hover {
+                background: #f3f7ff;
+                box-shadow: 0 2px 18px 0 rgba(60,60,120,0.05);
+                cursor: pointer;
+            }
+            
+</style>
+
+<div class="custom-table-container fade-in">
+    <div style="display:flex;align-items:center;margin-bottom:22px;">
+        <h2 style="font-size:2.1rem;font-weight:400;color:#2c3e50;letter-spacing:1px;margin:0;">
+            <i class="fa fa-list" style="color:#4a90e2"></i> Products
+        </h2>
+    </div>
+
+    <table class="custom-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price ($)</th>
+                <th>Stock</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td> @Html.ActionLink(item.Name , "Details" , new { id = item.Id} , new { style = "font-weight:600;color:#2561c7;text-decoration:none;" })</td>
+                    <td style="max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        <span style="font-weight:500;color:#2561c7;">$@item.Price.ToString()</span>
+                    </td>
+                    <td>@item.Stock</td>
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
